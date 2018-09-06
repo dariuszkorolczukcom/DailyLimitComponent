@@ -1,8 +1,21 @@
 import React, { Component } from 'react';
-import { ProgressBar } from 'react-bootstrap';
+import { Progress } from 'reactstrap';
 import { Control, LocalForm } from 'react-redux-form';
 import { Button, Label, Col, Row } from 'reactstrap';
 import { DATA } from '../shared/data';
+
+function DisplayNumbers(mobiles) {
+    console.log(mobiles[0]);
+    if(mobiles.length >0) {
+    return (
+    <div>Registered numbers: {mobiles.map((mobile) => {
+        return <span>{mobile}, </span>
+    })
+}</div>)
+    } else {
+        return (<div></div>)
+    }
+};
 
 class DailyLimit extends Component {
     constructor(props) {
@@ -12,7 +25,9 @@ class DailyLimit extends Component {
         };
         this.handleSubmitEmail = this.handleSubmitEmail.bind(this);
         this.handleSubmitNumber = this.handleSubmitNumber.bind(this);
-    }
+    };
+
+    
 
     handleSubmitEmail(values) {
         //edit to insert db connection for adding emails
@@ -32,17 +47,20 @@ class DailyLimit extends Component {
         alert("Will add a new number: " + JSON.stringify(values.number));
     };
 
+    
+
     render() {
         return (
             <div className="container">
                 <div className="col-12 mt-5">
                     <div style={mainContainerTop}>
+                    
                     <h3>Daily Spend Limit</h3>
                         <div style={mainContainerContent}><p style={paragraphText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p></div>
                         <div style={mainContainerContent}>
-                                <div style={alignRight}>£{this.state.data.currentSpend}</div>
-                                <div style={alignRight}>£{this.state.data.dailySpendLimit}</div>
-                            <ProgressBar now={this.state.data.currentSpend} max={this.state.data.dailySpendLimit} min={10}/>
+                                <div style={alignLeft}>£{this.state.data.currentSpend.toFixed(2)}</div>
+                                <div style={alignRight}>£{this.state.data.dailySpendLimit.toFixed(2)}</div>
+                            
                             <p>{`Todays spend ${this.state.data.currentSpend}% of limit`}</p> 
                         </div>
                         
@@ -52,10 +70,7 @@ class DailyLimit extends Component {
                     <div>Registered emails: {this.state.data.emails.map((email) => {
                         return <span>{email}, </span>
                     })}</div><br/>
-                    <div>Registered numbers: {this.state.data.mobiles.map((mobile) => {
-                        return <span>{mobile}, </span>
-                    })}</div><br/>
-                    
+                    {DisplayNumbers(this.state.data.mobiles)}              
                     <div style={formInput}>
                     <LocalForm onSubmit={(values) => this.handleSubmitNumber(values)}>
                         <Row className="form-group">
@@ -116,24 +131,32 @@ const mainContainerContent = {
     display: 'inline-block',
     fontSize: '15px',
     textAlign: 'left',
-    width: '49%'
+    width: '45%',
+    margin: '1%',
+    height: '100%'
 };
 const paragraphText = {
     textAlign: 'justify',
     backgroundColor: '#1f445e',
     padding: '20px'
 };
+const alignLeft = {
+    fontSize: '25px',
+    display: 'inline-block',
+    textAlign: 'left',
+    width: '49%',
+    height:'50%'
+};
 const alignRight = {
     fontSize: '25px',
     display: 'inline-block',
-    fontSize: '15px',
-    textAlign: 'center',
-    width: '49%'
+    textAlign: 'right',
+    width: '49%',
+    height:'50%'
 };
 const formInput = {
     fontSize: '25px',
     display: 'inline-block',
-    fontSize: '15px',
     width: '25%'
 };
 

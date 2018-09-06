@@ -1,7 +1,7 @@
 export const DATA =
 {
-    dailySpendLimit: 100,
-    currentSpend: 25,
+    dailySpendLimit: 100.00,
+    currentSpend: 25.00,
     emails: [
         'dkorolczuk86@gmail.com',
         'atat@sw.ds'
