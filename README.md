@@ -1,11 +1,40 @@
 Daily Spending Limit Component
 
 1. Clone the git repository:
+---
 ~root@root: git clone https://github.com/dariuszkorolczukcom/DailyLimitComponent.git
+
 2. To install all the dependencies, in the app folder run:
+---
 ~root@root: npm install
+
 3. run the app:
+---
 ~root@root: npm start
+
+The app reads the shared/data.js file, which contains the following:
+----
+export const DATA =
+{
+    dailySpendLimit: 100,
+    currentSpend: 25,
+    emails: [
+        'dkorolczuk86@gmail.com',
+        'atat@sw.ds'
+    ],
+    mobiles: [
+        '12341234',
+        '765765'
+    ]
+}
+----
+And displays it to the screen.
+
+two separate redux LocalForm elements take the data and send to handlers, which after updating will write the data down
+
+
+
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
