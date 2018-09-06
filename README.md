@@ -1,3 +1,12 @@
+Daily Spending Limit Component
+
+1. Clone the git repository:
+~root@root: git clone https://github.com/dariuszkorolczukcom/DailyLimitComponent.git
+2. To install all the dependencies, in the app folder run:
+~root@root: npm install
+3. run the app:
+~root@root: npm start
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
