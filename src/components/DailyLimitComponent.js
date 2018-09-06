@@ -5,7 +5,6 @@ import { Button, Label, Col, Row } from 'reactstrap';
 import { DATA } from '../shared/data';
 
 function DisplayNumbers(mobiles) {
-    console.log(mobiles[0]);
     if(mobiles.length >0) {
     return (
     <div>Registered numbers: {mobiles.map((mobile) => {
@@ -27,43 +26,32 @@ class DailyLimit extends Component {
         this.handleSubmitNumber = this.handleSubmitNumber.bind(this);
     };
 
-    
-
     handleSubmitEmail(values) {
         //edit to insert db connection for adding emails
-        this.setState({
-            email: values.email
-        });
+        
         console.log("Will add a new email: " + JSON.stringify(values.email));
         alert("Will add a new email: " + JSON.stringify(values.email));
     };
 
     handleSubmitNumber(values) {
         //edit to insert db connection for adding numbers
-        this.setState({
-            mobile: values.number
-        });
+        
         console.log("Will add a new number: " + JSON.stringify(values.number));
         alert("Will add a new number: " + JSON.stringify(values.number));
     };
-
-    
 
     render() {
         return (
             <div className="container">
                 <div className="col-12 mt-5">
                     <div style={mainContainerTop}>
-                    
                     <h3>Daily Spend Limit</h3>
                         <div style={mainContainerContent}><p style={paragraphText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p></div>
                         <div style={mainContainerContent}>
                                 <div style={alignLeft}>£{this.state.data.currentSpend.toFixed(2)}</div>
                                 <div style={alignRight}>£{this.state.data.dailySpendLimit.toFixed(2)}</div>
-                            
                             <p>{`Todays spend ${this.state.data.currentSpend}% of limit`}</p> 
                         </div>
-                        
                     </div>
                     <div style={mainContainerBottom}>
                     <h3>Notification settings</h3>
