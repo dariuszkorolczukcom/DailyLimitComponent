@@ -1,19 +1,22 @@
 Daily Spending Limit Component
 
+![alt text](https://github.com/dariuszkorolczukcom/DailyLimitComponent/blob/master/img.png)
+
 1. Clone the git repository:
----
+<code>
 ~root@root: git clone https://github.com/dariuszkorolczukcom/DailyLimitComponent.git
-
+</code>
 2. To install all the dependencies, in the app folder run:
----
+<code>
+~root@root: cd DailyLimitComponent
 ~root@root: npm install
-
+</code>
 3. run the app:
----
+<code>
 ~root@root: npm start
-
-The app reads the shared/data.js file, which contains the following:
-----
+</code>
+The app reads the shared/data.js file, and displays array stored in constant DATA to the screen. Edit it to change the Progressbar.:
+<code>
 export const DATA =
 {
     dailySpendLimit: 100,
@@ -25,8 +28,8 @@ export const DATA =
         (...)
     ]
 }
-----
-And displays it to the screen.
+</code>
+
 
 There are maximum 4 emails and 4 phone numbers displayed, and if no numbers provided displays empty div.
 
@@ -43,6 +46,7 @@ and validates email with use of regular expression:
 The number validation errors are showed only when focused on the input, while e-mail errors will display even when not focused
 
 by editing the dailySpendLimit and currentSpend state, the percentage on the progress bar changes, along with percentage writen just underneath it
+
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
