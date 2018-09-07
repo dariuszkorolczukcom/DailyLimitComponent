@@ -14,6 +14,8 @@ class DailyLimit extends Component {
         this.handleSubmitNumber = this.handleSubmitNumber.bind(this);
     };
 
+    //displays provided array of numbers after taking only first 4
+
     DisplayNumbers(mobiles) {
         const numberList = mobiles.splice(0,4);
         if (mobiles.length > 0) {
@@ -30,6 +32,7 @@ class DailyLimit extends Component {
     };
 
     handleSubmitEmail(values) {
+
         //edit to insert db connection for adding emails
 
         console.log("Will add a new email: " + JSON.stringify(values.email));
@@ -37,6 +40,7 @@ class DailyLimit extends Component {
     };
 
     handleSubmitNumber(values) {
+
         //edit to insert db connection for adding numbers
 
         console.log("Will add a new number: " + JSON.stringify(values.number));
@@ -48,12 +52,13 @@ class DailyLimit extends Component {
             <div className="container">
                 <div className="col-12 mt-5">
                     <div style={mainContainerTop}>
-                        <h3>Daily Spend Limit</h3>
+                        <h3 style={titleText}>Daily Spend Limit</h3>
                         <div style={mainContainerContent}><p style={paragraphText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p></div>
                         <div style={mainContainerContent}>
                             <div style={alignLeft}>£{this.state.data.currentSpend.toFixed(2)}</div>
                             <div style={alignRight}>£{this.state.data.dailySpendLimit.toFixed(2)}</div>
-                            <p>{`Todays spend ${this.state.data.currentSpend}% of limit`}</p>
+                            <div style={alignLeft}>{`Todays spend ${this.state.data.currentSpend}% of limit`}</div>
+                            <div style={alignRight}>Spend limit</div>
                         </div>
                     </div>
                     <div style={mainContainerBottom}>
@@ -61,13 +66,7 @@ class DailyLimit extends Component {
                         <div>Registered emails: {this.state.data.emails.splice(0,4).map((email) => {
                             return <span>{email}, </span>
                         })}</div><br />
-
-
-
                         {this.DisplayNumbers(this.state.data.mobiles)}
-
-
-
                         <div style={formInput}>
                             <LocalForm onSubmit={(values) => this.handleSubmitNumber(values)}>
                                 <Row className="form-group">
@@ -115,6 +114,9 @@ class DailyLimit extends Component {
     };
 }
 
+
+//internal stylesheets
+
 const mainContainerTop = {
     margin: '20px',
     backgroundColor: '#2b2f30',
@@ -129,7 +131,7 @@ const mainContainerContent = {
     fontSize: '15px',
     textAlign: 'left',
     width: '45%',
-    margin: '1%',
+    margin: '1rem',
     height: '100%'
 };
 const paragraphText = {
@@ -156,5 +158,9 @@ const formInput = {
     display: 'inline-block',
     width: '25%'
 };
+const titleText = {
+    textAlign:'left',
+    padding:'1rem'
+}
 
 export default DailyLimit;

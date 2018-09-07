@@ -19,18 +19,18 @@ export const DATA =
     dailySpendLimit: 100,
     currentSpend: 25,
     emails: [
-        'dkorolczuk86@gmail.com',
-        'atat@sw.ds'
+        (...)
     ],
     mobiles: [
-        '12341234',
-        '765765'
+        (...)
     ]
 }
 ----
 And displays it to the screen.
 
-two separate redux LocalForm elements take the data and send to handlers, which after updating will write the data down
+There are maximum 4 emails and 4 phone numbers displayed, and if no numbers provided displays empty div.
+
+Two separate redux LocalForm elements take the data and send to handlers, which after updating will write the data down.
 
 
 
