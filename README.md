@@ -30,10 +30,19 @@ And displays it to the screen.
 
 There are maximum 4 emails and 4 phone numbers displayed, and if no numbers provided displays empty div.
 
-Two separate redux LocalForm elements take the data and send to handlers, which after updating will write the data down.
+Two separate redux LocalForm elements take the data and send to handlers, which after updating will write the data in components state. If you try to add more than 4 emails or numbers, it will send an alert.
 
+Added Validation , it checks if the number is:
+-greater than 2 numbers
+-15 numbers or less
+-is it a number
+and validates email with use of regular expression:
+-[letters and/or numbers]   + '@'  + [letters and/or numbers] + '.' + [2 to 4 letters]
+     /^[A-Z0-9._%+-]       +  @   +  [A-Z0-9.-]               + \.    [A-Z]{2,4}$/i 
 
+The number validation errors are showed only when focused on the input, while e-mail errors will display even when not focused
 
+by editing the dailySpendLimit and currentSpend state, the percentage on the progress bar changes, along with percentage writen just underneath it
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).

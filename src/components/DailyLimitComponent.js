@@ -1,14 +1,24 @@
 import React, { Component } from 'react';
-import { Progress } from 'reactstrap';
-import { Control, LocalForm } from 'react-redux-form';
+import { Line } from 'rc-progress';
+import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Button, Label, Col, Row } from 'reactstrap';
 import { DATA } from '../shared/data';
+
+//validation variables
+const required = (val) => val && val.length;
+const maxLength = (len) => (val) => !(val) || (val.length <= len);
+const minLength = (len) => (val) => val && (val.length >= len);
+const isNumber = (val) => !isNaN(Number(val));
+const validEmail = (val) => /^[A-Z0-9._%+-]+@+[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
 
 class DailyLimit extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: DATA
+            emails: DATA.emails,
+            mobiles: DATA.mobiles,
+            currentSpend: DATA.currentSpend,
+            dailySpendLimit: DATA.dailySpendLimit
         };
         this.handleSubmitEmail = this.handleSubmitEmail.bind(this);
         this.handleSubmitNumber = this.handleSubmitNumber.bind(this);
@@ -17,13 +27,13 @@ class DailyLimit extends Component {
     //displays provided array of numbers after taking only first 4
 
     DisplayNumbers(mobiles) {
-        const numberList = mobiles.splice(0,4);
+
         if (mobiles.length > 0) {
             return (
-                <div>Registered numbers: 
-                {numberList.map((number) => {
-                            return <span>{number}, </span>
-                        })}
+                <div>Registered numbers:
+                {mobiles.map((number) => {
+                        return <span>{number}, </span>
+                    })}
                 </div>
             )
         } else {
@@ -31,50 +41,71 @@ class DailyLimit extends Component {
         }
     };
 
+    //handle adding new email to the state
     handleSubmitEmail(values) {
-
-        //edit to insert db connection for adding emails
-
-        console.log("Will add a new email: " + JSON.stringify(values.email));
-        alert("Will add a new email: " + JSON.stringify(values.email));
+        let newArray = this.state.emails;
+        if (newArray.length >= 4) {
+            alert('You can add only 4 emails!')
+        } else {
+            newArray.push(values.email);
+            this.setState({ emails: newArray });
+        }
     };
 
+    //handle adding new number to the state
     handleSubmitNumber(values) {
-
-        //edit to insert db connection for adding numbers
-
-        console.log("Will add a new number: " + JSON.stringify(values.number));
-        alert("Will add a new number: " + JSON.stringify(values.number));
+        let newArray = this.state.mobiles;
+        if (newArray.length >= 4) {
+            alert('You can add only 4 numbers!')
+        } else {
+            newArray.push(values.number);
+            this.setState({ mobiles: newArray });
+        }
     };
 
     render() {
+        const emailList = this.state.emails;
         return (
             <div className="container">
-                <div className="col-12 mt-5">
+                <div className="col-12 mt-5 dark">
                     <div style={mainContainerTop}>
                         <h3 style={titleText}>Daily Spend Limit</h3>
                         <div style={mainContainerContent}><p style={paragraphText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p></div>
                         <div style={mainContainerContent}>
-                            <div style={alignLeft}>£{this.state.data.currentSpend.toFixed(2)}</div>
-                            <div style={alignRight}>£{this.state.data.dailySpendLimit.toFixed(2)}</div>
-                            <div style={alignLeft}>{`Todays spend ${this.state.data.currentSpend}% of limit`}</div>
+                            <div style={alignLeft}>£{this.state.currentSpend.toFixed(2)}</div>
+                            <div style={alignRight}>£{this.state.dailySpendLimit.toFixed(2)}</div>
+                            <div className="col-12"><Line percent={(this.state.currentSpend/this.state.dailySpendLimit*100).toFixed(0)} strokeWidth="1" strokeColor="#c0522d" trailColor="rgba(100,100,100,.4)"/></div>
+                            <div style={alignLeft}>{`Todays spend ${(this.state.currentSpend/this.state.dailySpendLimit*100).toFixed(0)}% of limit`}</div>
                             <div style={alignRight}>Spend limit</div>
                         </div>
                     </div>
                     <div style={mainContainerBottom}>
                         <h3>Notification settings</h3>
-                        <div>Registered emails: {this.state.data.emails.splice(0,4).map((email) => {
+                        <div>Registered emails: {console.log('right before map ' + this.state.emails)}{emailList.map((email) => {
                             return <span>{email}, </span>
-                        })}</div><br />
-                        {this.DisplayNumbers(this.state.data.mobiles)}
+                        })}</div><br />{console.log('right after map ' + this.state.emails)}
+                        {this.DisplayNumbers(this.state.mobiles)}
                         <div style={formInput}>
                             <LocalForm onSubmit={(values) => this.handleSubmitNumber(values)}>
                                 <Row className="form-group">
-                                    <Label htmlFor="number" md={2}>Number: </Label>
+                                    <Label style={labelStyle} htmlFor="number" md={2}>Mobile: </Label>
                                     <Col md={10}>
                                         <Control.text model=".number" id="number" name="number"
-                                            placeholder="Number"
+                                            placeholder="Tel. Number"
                                             className="form-control"
+                                            validators={{
+                                                minLength: minLength(3), maxLength: maxLength(15), isNumber
+                                            }}
+                                        />
+                                        <Errors
+                                            className="text-danger"
+                                            model=".number"
+                                            show={{ touched: true, focus: true }}
+                                            messages={{
+                                                minLength: 'Must be greater than 2 numbers',
+                                                maxLength: 'Must be 15 numbers or less',
+                                                isNumber: 'Must be a number'
+                                            }}
                                         />
                                     </Col>
                                 </Row>
@@ -90,11 +121,33 @@ class DailyLimit extends Component {
                         <div style={formInput}>
                             <LocalForm onSubmit={(values) => this.handleSubmitEmail(values)}>
                                 <Col className="form-group">
-                                    <Label htmlFor="email" md={2}>Email</Label>
+                                    <Label style={labelStyle} htmlFor="email" md={2}>Email</Label>
                                     <Col md={10}>
                                         <Control.text model=".email" id="email" name="email"
                                             placeholder="Email"
                                             className="form-control"
+                                            validators={{
+                                                required, validEmail
+                                            }}
+                                        />
+                                        <Errors
+                                            className="text-danger"
+                                            model=".email"
+                                            show="touched"
+                                            messages={{
+                                                required: 'Required',
+                                                validEmail: 'Invalid Email Address'
+                                            }}
+                                        />
+                                        <Errors
+                                            className="text-danger"
+                                            model=".telnum"
+                                            show="touched"
+                                            messages={{
+                                                minLength: 'Must be greater than 2 numbers',
+                                                maxLength: 'Must be 15 numbers or less',
+                                                isNumber: 'Must be a number'
+                                            }}
                                         />
                                     </Col>
                                 </Col>
@@ -113,7 +166,6 @@ class DailyLimit extends Component {
         );
     };
 }
-
 
 //internal stylesheets
 
@@ -159,8 +211,12 @@ const formInput = {
     width: '25%'
 };
 const titleText = {
-    textAlign:'left',
-    padding:'1rem'
-}
+    textAlign: 'left',
+    padding: '1rem'
+};
+const labelStyle = {
+    fontSize: '10px',
+    color:'rgba(50,50,50,.7)'
+};
 
 export default DailyLimit;
