@@ -1,6 +1,8 @@
 Daily Spending Limit Component
 
-![alt text](https://github.com/dariuszkorolczukcom/DailyLimitComponent/blob/master/img.png)
+checkout working example:
+http://www.crazystuff.club/
+and go to Daily Limit Component
 
 1. Clone the git repository:
 <code>
