@@ -6,15 +6,18 @@ Daily Spending Limit Component
 <code>
 ~root@root: git clone https://github.com/dariuszkorolczukcom/DailyLimitComponent.git
 </code>
+
 2. To install all the dependencies, in the app folder run:
 <code>
 ~root@root: cd DailyLimitComponent
 ~root@root: npm install
 </code>
+
 3. run the app:
 <code>
 ~root@root: npm start
 </code>
+
 The app reads the shared/data.js file, and displays array stored in constant DATA to the screen. Edit it to change the Progressbar.:
 <code>
 export const DATA =
